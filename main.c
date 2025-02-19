@@ -6,12 +6,15 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:57:51 by thacharo          #+#    #+#             */
-/*   Updated: 2025/02/13 21:48:00 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/02/20 03:26:57 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
+#include <stdio.h>
+
+uint32_t	billionear_interpolate(mlx_image_t *image, double x, double y);
 
 void	ft_error(void)
 {
@@ -19,136 +22,72 @@ void	ft_error(void)
 	exit(EXIT_FAILURE);
 }
 
-// 'Encodes' four individual bytes into an int.
-int get_rgba(int r, int g, int b, int a)
+
+
+uint32_t	bilinear_interpolate(t_data *data, double x, double y)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
-}
+	int	x1;
+	int	y1;
+	int	x2;
+	int	y2;
 
-// Get the red channel.
-int get_r(int rgba)
-{
-    // Move 3 bytes to the right and mask out the first byte.
-    return ((rgba >> 24) & 0xFF);
-}
+	x1 = (int)(x);
+	y1 = (int)(y);
+	x2 = x1 + 1;
+	y2 = y1 + 1;
+	// x1 = (int)floor(x);
+	// y1 = (int)floor(y);
+	// x2 = (int)(fmin(x1 + 1, WIDTH - 1));
+	// y2 = (int)(fmin(y1 + 1, HEIGHT - 1));
 
-// Get the green channel.
-int get_g(int rgba)
-{
-    // Move 2 bytes to the right and mask out the first byte.
-    return ((rgba >> 16) & 0xFF);
-}
-
-// Get the blue channel.
-int get_b(int rgba)
-{
-    // Move 1 byte to the right and mask out the first byte.
-    return ((rgba >> 8) & 0xFF);
-}
-
-// Get the alpha channel.
-int get_a(int rgba)
-{
-    // Move 0 bytes to the right and mask out the first byte.
-    return (rgba & 0xFF);
-}
-
-#include <stdio.h>
-
-
-void	get_background(mlx_image_t *image, int rgba)
-{
-	int	x;
-	int y;
-
-	y = 0;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			mlx_put_pixel(image, x, y, rgba);
-			x++;	
-		}
-		y++;
-	}
-}
-
-void	draw_axis(mlx_image_t *image)
-{
-	int	x;
-	int	y;
-	int	mid_x;
-	int mid_y;
-
-	x = 0;
-	y = 0;
-	mid_x = WIDTH / 2;
-	mid_y = HEIGHT / 2;
-	while (x < WIDTH)
-	{
-		mlx_put_pixel(image, x, mid_y, 0xFFFFFFFF);
-		x++;
-	}
-	while (y < HEIGHT)
-	{
-		mlx_put_pixel(image, mid_x, y, 0xFFFFFFFF);
-		y++;
-	}
-}
-
-int mandelbrot(float x0, float y0)
-{
-	int		i;
-	float x;
-	float y;
-	float x2;
-	float y2;
+	// x1 = fmax(0, fmin(WIDTH - 1, x1));
+	// y1 = fmax(0, fmin(HEIGHT - 1, y1));
+	// x2 = fmax(0, fmin(WIDTH - 1, x2));
+	// y2 = fmax(0, fmin(HEIGHT - 1, y2));
+	// if (x1 < 0 || y1 < 0 || x2 >= WIDTH || y2 >= HEIGHT)
+	// 	return (0xFF0000FF);
 	
-	x = 0.0;
-	y = 0.0;
-	x2 = 0.0;
-	y2 = 0.0;
+    // if (x1 < 0) x1 = 0;
+    // if (y1 < 0) y1 = 0;
+	if (x2 >= WIDTH)
+		x2 = WIDTH - 1;
+	if (y2 >= HEIGHT)
+		y2 = HEIGHT - 1;
 
-	i = 0;
-	while ((x2 + y2) <= 4 && (i < MAX_ITERATION))
-	{
-		y = (x + x) * y + y0;
-		x = x2 - y2 + x0;
-		x2 = x * x;
-		y2 = y * y;
-		i++;
-	}
-	return i;
+	double dx = x - x1;
+	double dy = y - y1;
+	
+    uint8_t *pixels = data -> prev_pixels;
+
+    uint32_t idx11 = (y1 * data -> img -> width + x1) * 4;
+    uint32_t idx21 = (y1 * data -> img -> width + x2) * 4;
+    uint32_t idx12 = (y2 * data -> img -> width + x1) * 4;
+    uint32_t idx22 = (y2 * data -> img -> width + x2) * 4;
+
+    uint8_t r11 = pixels[idx11], g11 = pixels[idx11 + 1], b11 = pixels[idx11 + 2];
+    uint8_t r21 = pixels[idx21], g21 = pixels[idx21 + 1], b21 = pixels[idx21 + 2];
+    uint8_t r12 = pixels[idx12], g12 = pixels[idx12 + 1], b12 = pixels[idx12 + 2];
+    uint8_t r22 = pixels[idx22], g22 = pixels[idx22 + 1], b22 = pixels[idx22 + 2];
+
+    // Bilinear interpolation on each color channel
+	uint8_t r = (uint8_t)((1 - dx) * (1 - dy) * r11 + dx * (1 - dy) * r21 + (1 - dx) * dy * r12 + dx * dy * r22);
+	uint8_t g = (uint8_t)((1 - dx) * (1 - dy) * g11 + dx * (1 - dy) * g21 + (1 - dx) * dy * g12 + dx * dy * g22);
+	uint8_t b = (uint8_t)((1 - dx) * (1 - dy) * b11 + dx * (1 - dy) * b21 + (1 - dx) * dy * b12 + dx * dy * b22);
+	
+
+    // Return the color in RGBA format
+    return (r << 24) | (g << 16) | (b << 8) | 255;
 }
 
-int get_gradient(int i)
+void 	zoom_mandelbrot(t_data *data, double scale)
 {
-	int r;
-	int g;
-	int b;
-	int a;
-
-	r = (i * 255) / MAX_ITERATION;
-	g = (i * 128) / MAX_ITERATION;
-	b = (i * 64) / MAX_ITERATION;
-	a = 255;
-
-	return (r << 24) | (g << 16) | (b << 8) | a;
-}
-
-void	draw_mandelbrot(mlx_image_t *image, double center_x, double center_y, float zoom)
-{
-	// t_complex number;
 	int	x;
 	int	y;
-	int	i;
-	int color;
+	double scale_x;
+	double scale_y;
 
-	float scale_x = (3 / zoom) / WIDTH; // Scale to (-2.00, 1)
-	float scale_y = (3 / zoom) / HEIGHT;// Scale to (-1.5, 1.5)
-	float real;
-	float imaginary;
+	double center_x = data -> img -> width / 2.0;
+	double center_y = data -> img -> height / 2.0;
 
 	y = 0;
 	while (y < HEIGHT)
@@ -156,48 +95,78 @@ void	draw_mandelbrot(mlx_image_t *image, double center_x, double center_y, float
 		x = 0;
 		while (x < WIDTH)
 		{
-			real = center_x - (2.00 / zoom) + x * scale_x;
-			imaginary = center_y - (1.5 / zoom) + y * scale_y;
-			i = mandelbrot(real, imaginary);
-			if (i == MAX_ITERATION)
-				color = BLACK;
-			else
-				color = get_gradient(i);
-			mlx_put_pixel(image, x, y, color);
+			scale_x = center_x + (x - center_x) / scale;
+			scale_y = center_y + (y - center_y) / scale;
+			// scale_x = fmax(0, fmin(WIDTH - 1, scale_x));
+			// scale_y = fmax(0, fmin(HEIGHT - 1, scale_y));
+
+			// Debugging: print the scale_x and scale_y for each pixel
+			// printf("scale_x: %f, scale_y: %f\n", scale_x, scale_y);
+			// uint32_t color = bilinear_interpolate(data, scale_x, scale_y);
+			// mlx_put_pixel(data->img, x, y, color);
+
+            if (scale_x < 0 || scale_x >= WIDTH || scale_y < 0 || scale_y >= HEIGHT) {
+				mlx_put_pixel(data->img, x, y, 0xFF0000FF);  // Black if out of bounds
+            } else {
+				uint32_t color = bilinear_interpolate(data, scale_x, scale_y);
+                mlx_put_pixel(data->img, x, y, color);
+            }
 			x++;
 		}
 		y++;
 	}
-
-	
 }
 
-
-void my_keyhook(mlx_key_data_t keydata, void *param)
+void	zoom(t_data *data, int is_zoom_in)
 {
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		exit(EXIT_SUCCESS);
+	// ft_memset(data -> prev_pixels, BLACK, WIDTH * HEIGHT * sizeof(uint8_t));
+	ft_memmove(data -> prev_pixels, data -> img -> pixels, WIDTH * HEIGHT * sizeof(uint8_t) * 4);
+	if (is_zoom_in == 1)
+	{
+		zoom_mandelbrot(data, 1.05);
+		data -> zoom *= 1.05;
+	}	
+	else if (is_zoom_in == -1)
+	{
+		zoom_mandelbrot(data, 0.95);
+		data -> zoom /= 1.05;
+	}
+	
+	return ;
 }
+
+
+
 
 int	main(void)
 {
 	t_data 		data;
 
+	data.center_real = 0.0;
+	data.center_imag = 0.0;
+	data.zoom = 1.0;
+	data.move_keys[0] = false;
+	data.move_keys[1] = false;
+	data.move_keys[2] = false;
+	data.move_keys[3] = false;
+	data.zoom_keys = 0;
+	data.prev_pixels = (uint8_t *)malloc(WIDTH * HEIGHT * sizeof(uint8_t) * 4);
+	if (data.prev_pixels == NULL)
+		exit(EXIT_FAILURE);
+	ft_bzero(data.prev_pixels, WIDTH * HEIGHT * sizeof(uint8_t) * 4);
 	data.mlx = mlx_init(WIDTH, HEIGHT, "fractol", true);
 	if (!(data.mlx))
 		ft_error();
 	
 	data.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
-
-	get_background(data.img, 0xFFFFFFFF);
 	
 	if (!(data.img) || (mlx_image_to_window(data.mlx, data.img, 0, 0) < 0))
 		ft_error();
 		
-	draw_mandelbrot(data.img, 0.0, 0.0, 1.0);
-		
-	
-	mlx_key_hook(data.mlx, &my_keyhook, NULL);
+	draw_mandelbrot(data.img, data.center_real, data.center_imag, 1.0);
+	// free(data.prev_pixels);
+	mlx_key_hook(data.mlx, &my_keyhook, &data);
+	mlx_loop_hook(data.mlx, &update, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 	return (EXIT_SUCCESS);

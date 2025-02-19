@@ -1,4 +1,5 @@
 NAME := fractol
+CFLAGS := -Ofast -O3
 # CFLAGS := -Wall -Wextra -Werror -Wunreachable-code -Ofast
 LIBMLX := ./MLX42/
 
@@ -6,7 +7,7 @@ HEADERS := -I ./ -I $(LIBMLX)/include/MLX42
 LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm 
 # -framework Cocoa -framework OpenGL -framework IOKit # For macos
 # LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm # For linux
-MANDATORY_SRCS     := main.c
+MANDATORY_SRCS     := main.c mandelbrot.c keyhook.c color.c
 MANDATORY_OBJS_DIR := ./objects/
 MANDATORY_SRCS_OBJS:= ${MANDATORY_SRCS:.c=.o}
 MANDATORY_OBJS     := $(addprefix $(MANDATORY_OBJS_DIR), $(MANDATORY_SRCS_OBJS))
