@@ -40,7 +40,12 @@ typedef struct s_fractol
 	mlx_t       *mlx;
 	mlx_image_t *image;
 	int32_t     color_style;
-	int32_t     max_iteration;
+	float		max_iteration;
+    uint8_t     *image_buffer;
+    float       zoom;
+	int32_t		is_zoom;
+	float		scale_x;
+	float		scale_y;
 	t_range     range;
 }   t_fractol;
 
@@ -53,10 +58,18 @@ float pixel_to_complex_x(t_fractol *data, int32_t x_pixel);
 float pixel_to_complex_y(t_fractol *data, int32_t y_pixel);
 
 /* mandelbrot.c */
-void    create_mandelbrot(t_fractol *data);
+void    create_mandelbrot(t_fractol *data, int is_full_pixel);
 
 /* color.c */
-uint32_t    get_color(t_fractol *data, int32_t iteration);
+uint32_t    get_color(t_fractol *data, int32_t iteration, double zn);
 
 /* resize_hook.c */
-void	my_resizefunc(int32_t width, int32_t height, void* param);
+void	my_resizefunc(int32_t width, int32_t height, void *param);
+
+/* scroll_hook.c */
+void    my_scrollhook(double xdelta, double ydelta, void *param);
+void	zoom_in(t_fractol *data, float scaled_x, float scaled_y);
+void	zoom_out(t_fractol *data, float scaled_x, float scaled_y);
+
+/* loop_hook.c*/
+void    my_loophook(void *param);
