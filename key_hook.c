@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:41:20 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 22:14:45 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/04 00:58:04 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,18 @@ void    my_keyhook(mlx_key_data_t keydata, void *param)
             data->is_toggle = 1;
         else
             data->is_toggle = 0;
+    }
+    else if (keydata.key == MLX_KEY_1 && keydata.action == MLX_PRESS)
+    {
+        data->color_style = 0;
+    }
+    else if (keydata.key == MLX_KEY_2 && keydata.action == MLX_PRESS)
+    {
+        data->color_style = 1;
+    }
+    else if (keydata.key == MLX_KEY_3 && keydata.action == MLX_PRESS)
+    {
+        data->color_style = 2;
     }
     
 }

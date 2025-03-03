@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 22:45:06 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 23:16:52 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/04 02:35:46 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static uint32_t    draw_burning_ship(t_fractol *data)
 	{
         x_temp = x * x - y * y + data->scale_x;
 		y = fabs((x + x) * y) - data->scale_y;
-		x = x_temp;
+		x = fabs(x_temp);
 		x_squared = x * x;
 		y_squared = y * y;
 		iteration++; 

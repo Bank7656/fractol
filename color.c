@@ -6,14 +6,15 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:48:59 by thacharo          #+#    #+#             */
-/*   Updated: 2025/02/26 19:25:35 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/04 04:54:41 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
 static uint32_t	black_red_gradient(t_fractol *data, int32_t iteration);
-static uint32_t	smooth_color(t_fractol *data, int32_t iteration, double zn);
+static uint32_t	smooth_color(t_fractol *data, int32_t iteration, long double zn);
+static uint32_t black_white(t_fractol *data, int32_t iteration, long double zn);
 
 /*
 	Parsing to each color style
@@ -24,7 +25,10 @@ uint32_t    get_color(t_fractol *data, int32_t iteration, double zn)
 		return (black_red_gradient(data, iteration));
 	else if (data->color_style == 1)
 		return (smooth_color(data, iteration, zn));
+	else if (data->color_style == 2)
+		return (black_white(data, iteration, zn));
 	return (0xFF0000FF);
+		
 }
 
 static uint32_t    black_red_gradient(t_fractol *data, int32_t iteration)
@@ -45,18 +49,41 @@ static uint32_t    black_red_gradient(t_fractol *data, int32_t iteration)
 	return ((r << 24) | (g << 16) | (b << 8) | 255);
 }
 
-static uint32_t	smooth_color(t_fractol *data, int32_t iteration, double zn)
+static uint32_t	smooth_color(t_fractol *data, int32_t iteration, long double zn)
 {
-	uint8_t	r;
-	uint8_t	g;
-	uint8_t	b;
-	double	smooth;
-	double	t;
+	uint32_t colors[16];
+	
+	colors[0] = 0x421E0FFF;
+	colors[1] = 0x19071AFF;
+	colors[2] = 0x09012FFF;
+	colors[3] = 0x040447FF;
+	colors[4] = 0x000764FF;
+	colors[5] = 0x0C2C8AFF;
+	colors[6] = 0x1852B1FF;
+	colors[7] = 0x397DD1FF;
+	colors[8] = 0x86B5E5FF;
+	colors[9] = 0xD3ECF8FF;
+	colors[10] = 0xF1E9BFFF;
+	colors[11] = 0xF8C95FFF;
+	colors[12] = 0xFFAA00FF;
+	colors[13] = 0xCC8000FF;
+	colors[14] = 0x995700FF;
+	colors[15] = 0x6A3403FF;
+	if (iteration == data->max_iteration)
+		return (0x000000FF);
+	return (colors[iteration % 16]);
+}
 
-	smooth = iteration + 1 - log2(log2(zn));
-	t = pow(smooth / data->max_iteration, 0.7);
-    r = (uint8_t)(9 * (1 - t) * t * t * t * 255);
-    g = (uint8_t)(15 * (1 - t) * (1 - t) * t * t * 255);
-    b = (uint8_t)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
-	return (((r << 24) | (g << 16) | (b << 8) | 255));
+static uint32_t black_white(t_fractol *data, int32_t iteration, long double zn)
+{
+	uint32_t black;
+	uint32_t white;
+
+	
+	black = 0x000000FF;
+	white = 0xFFFFFFFF;
+
+	if (iteration % 2 == 0)
+		return (black);
+	return (white);
 }
