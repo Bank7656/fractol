@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:31:24 by thacharo          #+#    #+#             */
-/*   Updated: 2025/02/27 03:12:36 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:05:07 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,21 @@ void    my_scrollhook(double xdelta, double ydelta, void* param)
 	// printf("mouse x:%i mouse y:%i\n", mouse_x, mouse_y);
 	// printf("scaled x:%.2f scaled y:%.2f\n", scale_mouse_x, scale_mouse_y);
 	if (ydelta > 0)
+	{
 		zoom_factor = 0.9;
+		data->zoom *= zoom_factor;
+	}
 	else
-		zoom_factor = 1.1;	
+	{
+		zoom_factor = 1.1;
+		data->zoom *= zoom_factor;
+	}
 	data->range.x_min = data -> scale_x + (data->range.x_min - data -> scale_x) * zoom_factor;
 	data->range.x_max = data -> scale_x + (data->range.x_max - data -> scale_x) * zoom_factor;
 	data->range.y_min = data -> scale_y + (data->range.y_min - data -> scale_y) * zoom_factor;
 	data->range.y_max = data -> scale_y + (data->range.y_max - data -> scale_y) * zoom_factor;
 	data->is_zoom = 1;
+	// printf("data->zoom: %.5f\n", data->zoom);
 	// create_mandelbrot(data);
 }
 

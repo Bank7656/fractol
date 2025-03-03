@@ -1,45 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   julia.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/24 16:44:00 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 20:14:43 by thacharo         ###   ########.fr       */
+/*   Created: 2025/03/03 14:43:25 by thacharo          #+#    #+#             */
+/*   Updated: 2025/03/03 20:07:08 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static uint32_t    draw_mandelbrot(t_fractol *data);
+static uint32_t    draw_julia(t_fractol *data, long double cx, long double cy, long double r);
 
-/*
-   Create mandelbrot set by looping each pixel that appear on the window
-*/
-void    create_mandelbrot(t_fractol *data, int is_full_pixel)
+void    create_julia(t_fractol *data, int32_t is_full_pixel)
 {
 	long double		scaled_x;
 	long double		scaled_y;
-	uint32_t	pixel_x;
-	uint32_t	pixel_y;
-	uint32_t	color;
+    long double   cx;
+    long double   cy;
+    long double   r;
+    int32_t step;
+    uint32_t color;
+    uint32_t pixel_x;
+    uint32_t pixel_y;
 
-	int step = 2;  // Adjust scaling factor as needed
-	// if (step < 1) step = 1;	
+    step = 2;
+    cx = 0.285;
+    cy = 0;
+    
+    r = sqrt(cx * cx + cy * cy);
 
-	if (is_full_pixel == 1)
+    if (is_full_pixel == 1)
 		step = 1;
-
-	pixel_y = 0;
-	while (pixel_y < data->mlx->height)
+    pixel_y = 0;
+    while (pixel_y < data->mlx->height)
 	{
 		pixel_x = 0;
 		while (pixel_x < data->mlx->width)
 		{
 			data->scale_x = pixel_to_complex_x(data, pixel_x);
 			data->scale_y = pixel_to_complex_y(data, pixel_y);
-			color = draw_mandelbrot(data);
+			color = draw_julia(data, cx, cy, r);
 			mlx_put_pixel(data->image, pixel_x, pixel_y, color);
 			if (is_full_pixel == 0)
 			{				
@@ -55,32 +58,32 @@ void    create_mandelbrot(t_fractol *data, int is_full_pixel)
 		}
 		pixel_y += step;
 	}    
+    
 }
 
-/*
-	Using escape time algorithm to calculate mandelbrot set
-*/
-static uint32_t    draw_mandelbrot(t_fractol *data)
+static uint32_t    draw_julia(t_fractol *data, long double cx, long double cy, long double r)
 {
 	long double 	x;
 	long double 	y;
 	long double 	x_squared;
 	long double 	y_squared;
+    long double   x_temp;
 	int32_t iteration;
 	int32_t	loop;
 
-	x = 0;
-	y = 0;
-	x_squared = 0;
-	y_squared = 0;
+	x = data -> scale_x;
+	y = data -> scale_y;
+	x_squared = x * x;
+	y_squared = y * y;
 	iteration = 0;
 	loop = (data->max_iteration);
 	while ((x_squared + y_squared <= 4) && (iteration < loop))
 	{
-		y = (x + x) * y + data->scale_y;
-		x = x_squared - y_squared + data->scale_x;
-		x_squared = x * x;
-		y_squared = y * y;
+        
+        y = (x + x) * y + cy;
+		x = x_squared - y_squared + cx;
+        x_squared = x * x;
+        y_squared = y * y;
 		iteration++; 
 	}
 	return (get_color(data, iteration, sqrt(x_squared + y_squared)));
