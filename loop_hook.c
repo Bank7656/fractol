@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:53:07 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 22:10:16 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:52:59 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,9 @@ void    plot(t_fractol *data, int32_t is_full_pixel)
         // printf("Still in progress\n");
         create_julia(data, is_full_pixel);
         // exit(EXIT_SUCCESS);
+    }
+    else if (data->plot == BURNING_SHIP)
+    {
+        create_burning_ship(data, is_full_pixel);
     }
 }

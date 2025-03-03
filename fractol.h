@@ -79,6 +79,9 @@ void    	create_mandelbrot(t_fractol *data, int is_full_pixel);
 /* julia.c */
 void		create_julia(t_fractol *data, int32_t is_full_pixel);
 
+/* burning_ship.c*/
+void    create_burning_ship(t_fractol *data, int is_full_pixel);
+
 /* toggle.c */
 void    toggle_mode(t_fractol *data);
 

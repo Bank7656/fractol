@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:42:23 by thacharo          #+#    #+#             */
-/*   Updated: 2025/02/27 03:20:35 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:29:16 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	my_resizefunc(int32_t width, int32_t height, void* param)
 	data->mlx->height = height;
 	if (mlx_image_to_window(data->mlx, data->image, 0, 0) == -1)
 		ft_error();
-	create_mandelbrot(data, 1);
+	plot(data, 1);
 }
