@@ -6,32 +6,22 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:43:25 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 20:07:08 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:00:31 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static uint32_t    draw_julia(t_fractol *data, long double cx, long double cy, long double r);
+static uint32_t    draw_julia(t_fractol *data);
 
 void    create_julia(t_fractol *data, int32_t is_full_pixel)
 {
-	long double		scaled_x;
-	long double		scaled_y;
-    long double   cx;
-    long double   cy;
-    long double   r;
     int32_t step;
     uint32_t color;
     uint32_t pixel_x;
     uint32_t pixel_y;
 
     step = 2;
-    cx = 0.285;
-    cy = 0;
-    
-    r = sqrt(cx * cx + cy * cy);
-
     if (is_full_pixel == 1)
 		step = 1;
     pixel_y = 0;
@@ -42,7 +32,7 @@ void    create_julia(t_fractol *data, int32_t is_full_pixel)
 		{
 			data->scale_x = pixel_to_complex_x(data, pixel_x);
 			data->scale_y = pixel_to_complex_y(data, pixel_y);
-			color = draw_julia(data, cx, cy, r);
+			color = draw_julia(data);
 			mlx_put_pixel(data->image, pixel_x, pixel_y, color);
 			if (is_full_pixel == 0)
 			{				
@@ -61,13 +51,12 @@ void    create_julia(t_fractol *data, int32_t is_full_pixel)
     
 }
 
-static uint32_t    draw_julia(t_fractol *data, long double cx, long double cy, long double r)
+static uint32_t    draw_julia(t_fractol *data)
 {
 	long double 	x;
 	long double 	y;
 	long double 	x_squared;
 	long double 	y_squared;
-    long double   x_temp;
 	int32_t iteration;
 	int32_t	loop;
 
@@ -80,8 +69,8 @@ static uint32_t    draw_julia(t_fractol *data, long double cx, long double cy, l
 	while ((x_squared + y_squared <= 4) && (iteration < loop))
 	{
         
-        y = (x + x) * y + cy;
-		x = x_squared - y_squared + cx;
+        y = (x + x) * y + data->cy;
+		x = x_squared - y_squared + data->cx;
         x_squared = x * x;
         y_squared = y * y;
 		iteration++; 

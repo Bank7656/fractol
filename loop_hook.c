@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:53:07 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 14:56:11 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:10:16 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ void    my_loophook(void *param)
     {
         plot(data, 1);
         data->is_new_iteration = 0;   
+    }
+    else if (data->is_toggle)
+    {
+        toggle_mode(data);
     }
     else
     {

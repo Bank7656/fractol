@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:41:20 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 20:31:48 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:14:45 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,13 @@ void    my_keyhook(mlx_key_data_t keydata, void *param)
         data->range.x_min += move_factor;
         data->is_move = 1;
     }
-    // else if (keydata.key == MLX_KEY_D && data->plot == JULIA &&
-    //     keydata.action == MLX_PRESS)
-    // {
-    //     toggle_mode(data);
-    // }
+    else if (keydata.key == MLX_KEY_SPACE && data->plot == JULIA &&
+        keydata.action == MLX_PRESS)
+    {
+        if (data->is_toggle == 0)
+            data->is_toggle = 1;
+        else
+            data->is_toggle = 0;
+    }
     
 }

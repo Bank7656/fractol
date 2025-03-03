@@ -50,9 +50,12 @@ typedef struct s_fractol
     float       zoom;
 	int32_t		is_new_iteration;
 	int32_t		is_zoom;
+	int32_t		is_toggle;
 	int32_t		is_move;
 	long double		scale_x;
 	long double		scale_y;
+	long double		cx;
+	long double		cy;
 	t_range     range;
 }   t_fractol;
 
@@ -76,6 +79,9 @@ void    	create_mandelbrot(t_fractol *data, int is_full_pixel);
 /* julia.c */
 void		create_julia(t_fractol *data, int32_t is_full_pixel);
 
+/* toggle.c */
+void    toggle_mode(t_fractol *data);
+
 /* color.c */
 uint32_t    get_color(t_fractol *data, int32_t iteration, double zn);
 
@@ -92,3 +98,4 @@ void		zoom_out(t_fractol *data, float scaled_x, float scaled_y);
 
 /* loop_hook.c*/
 void		my_loophook(void *param);
+void    plot(t_fractol *data, int32_t is_full_pixel);

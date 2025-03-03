@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 22:18:03 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 19:57:07 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/03 20:42:35 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	data_init(t_fractol *data)
 {
 	plot_init(data);
 	// Initialize
+	data->is_toggle = 0;
 	data->color_style = 1;
 	data->is_zoom = 0;
 	data->is_move = 0;

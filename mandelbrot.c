@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:44:00 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 20:14:43 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/03 21:13:43 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static uint32_t    draw_mandelbrot(t_fractol *data)
 	y_squared = 0;
 	iteration = 0;
 	loop = (data->max_iteration);
-	while ((x_squared + y_squared <= 4) && (iteration < loop))
+	while ((x_squared + y_squared < 4) && (iteration < loop))
 	{
 		y = (x + x) * y + data->scale_y;
 		x = x_squared - y_squared + data->scale_x;

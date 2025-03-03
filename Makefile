@@ -8,7 +8,7 @@ LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 # -framework Cocoa -framework OpenGL -framework IOKit # For macos
 # LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm # For linux
 MANDATORY_SRCS     := main.c parser.c init.c convert.c mandelbrot.c julia.c color.c \
-					resize_hook.c key_hook.c scroll_hook.c loop_hook.c
+					toggle.c resize_hook.c key_hook.c scroll_hook.c loop_hook.c
 MANDATORY_OBJS_DIR := ./objects/
 MANDATORY_SRCS_OBJS:= ${MANDATORY_SRCS:.c=.o}
 MANDATORY_OBJS     := $(addprefix $(MANDATORY_OBJS_DIR), $(MANDATORY_SRCS_OBJS))
