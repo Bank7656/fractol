@@ -17,6 +17,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <float.h>
 
 #include "libft/libft.h"
 #include "MLX42/include/MLX42/MLX42.h"
@@ -59,7 +60,6 @@ typedef struct s_fractol
 	t_range     range;
 }   t_fractol;
 
-
 /* main.c */
 void		ft_error(void);
 
@@ -74,13 +74,13 @@ long double		pixel_to_complex_x(t_fractol *data, int32_t x_pixel);
 long double		pixel_to_complex_y(t_fractol *data, int32_t y_pixel);
 
 /* mandelbrot.c */
-void    	create_mandelbrot(t_fractol *data, int is_full_pixel);
+uint32_t    draw_mandelbrot(t_fractol *data);
 
 /* julia.c */
-void		create_julia(t_fractol *data, int32_t is_full_pixel);
+uint32_t    draw_julia(t_fractol *data);
 
 /* burning_ship.c*/
-void    create_burning_ship(t_fractol *data, int is_full_pixel);
+uint32_t    draw_burning_ship(t_fractol *data);
 
 /* toggle.c */
 void    toggle_mode(t_fractol *data);
@@ -101,4 +101,4 @@ void		zoom_out(t_fractol *data, float scaled_x, float scaled_y);
 
 /* loop_hook.c*/
 void		my_loophook(void *param);
-void    plot(t_fractol *data, int32_t is_full_pixel);
+void    	plot(t_fractol *data, int32_t is_full_pixel);
