@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:53:07 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 22:52:59 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:07:25 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void    my_loophook(void *param)
     else
     {
         plot(data, 1);
-        // create_mandelbrot(data, 1);
     }
     // printf("Iteration: %.2f\n", data->max_iteration);
     // printf("[x_min: %.7f] [x_max: %.7f] [y_min: %.7f] [y_max: %.7f]\n", data->range.x_min, data->range.x_max, data->range.y_min, data->range.y_max);
