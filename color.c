@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:48:59 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/04 04:54:41 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:03:40 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static uint32_t	black_red_gradient(t_fractol *data, int32_t iteration);
 static uint32_t	smooth_color(t_fractol *data, int32_t iteration, long double zn);
 static uint32_t black_white(t_fractol *data, int32_t iteration, long double zn);
+static uint32_t rainbow(t_fractol *data, int32_t iteration, long double zn);
 
 /*
 	Parsing to each color style
@@ -27,6 +28,8 @@ uint32_t    get_color(t_fractol *data, int32_t iteration, double zn)
 		return (smooth_color(data, iteration, zn));
 	else if (data->color_style == 2)
 		return (black_white(data, iteration, zn));
+	else if (data->color_style == 3)
+		return (rainbow(data, iteration, zn));
 	return (0xFF0000FF);
 		
 }
@@ -86,4 +89,22 @@ static uint32_t black_white(t_fractol *data, int32_t iteration, long double zn)
 	if (iteration % 2 == 0)
 		return (black);
 	return (white);
+}
+
+static uint32_t rainbow(t_fractol *data, int32_t iteration, long double zn)
+{
+	long double	mu;
+	uint32_t colors[7];
+	
+	colors[0] = 0xFF0000FF;
+	colors[1] = 0xFF7F00FF;
+	colors[2] = 0xFFFF00FF;
+	colors[3] = 0x00FF00FF;
+	colors[4] = 0x00FFFFFF;
+	colors[5] = 0x0000FFFF;
+	colors[6] = 0x8B0000FF;
+
+	if (iteration == data->max_iteration)
+		return (0x000000FF);
+	return (colors[iteration % 7]);
 }
