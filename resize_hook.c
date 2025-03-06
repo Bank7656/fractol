@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:42:23 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 22:29:16 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/06 02:27:14 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,21 @@
 
 void	my_resizefunc(int32_t width, int32_t height, void* param)
 {
+	int32_t	new_width;
+	int32_t	new_height;
 	t_fractol *data;
 
 	data = (t_fractol *)param;
 	mlx_delete_image(data->mlx, data->image);
-	data->image = mlx_new_image(data->mlx, width, height);
+	new_width = width;
+	new_height = width * 9 / 16;
+	mlx_set_window_size(data->mlx, new_width, new_height);
+	data->image = mlx_new_image(data->mlx, new_width, new_height);
 	if (data->image == NULL)
 		ft_error();
-	data->mlx->width = width;
-	data->mlx->height = height;
+	data->mlx->width = new_width;
+	data->mlx->height = new_height;
 	if (mlx_image_to_window(data->mlx, data->image, 0, 0) == -1)
 		ft_error();
-	plot(data, 1);
+	plot(data, 0);
 }

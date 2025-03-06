@@ -30,8 +30,8 @@
 #define JULIA 1
 #define BURNING_SHIP 2
 
-#define WIDTH 1080
-#define HEIGHT 720
+#define WIDTH 1024
+#define HEIGHT 576
 
 typedef struct s_range
 {
@@ -61,10 +61,13 @@ typedef struct s_fractol
 }   t_fractol;
 
 /* main.c */
+int			usage_prompt(void);
 void		ft_error(void);
 
+/* my_atof.c*/
+double		my_atof(const char *str);
 /* parser.c */
-int32_t		parser(t_fractol *data, char *str);
+int32_t		parser(t_fractol *data, int argc, char *argv[]);
 
 /* init.c */
 void		plot_init(t_fractol *data);

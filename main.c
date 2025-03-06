@@ -6,27 +6,22 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 22:18:03 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/03 23:16:18 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/07 02:54:47 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
 static void	data_init(t_fractol *data);
-static int	usage_prompt(void);
 static void	check_hook(t_fractol *data);
 
 int main(int argc, char *argv[])
 {
 	t_fractol   data;
 
-	if (argc != 2)
-		exit(usage_prompt());
-	// Create mandelbrot
-	if (parser(&data, argv[1]) == 0)
+	if (parser(&data, argc, argv) == 0)
 		exit(usage_prompt());
 	data_init(&data);
-	// create_mandelbrot(&data, 1);
 	check_hook(&data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
@@ -56,10 +51,10 @@ static void	data_init(t_fractol *data)
 	data->is_move = 0;
 	data->is_new_iteration = 0;
 	// Init mlx
-	
 	data->mlx = mlx_init(WIDTH, HEIGHT, "fractol", true);
 	if (data->mlx == NULL)
 		ft_error();
+	mlx_set_window_limit(data->mlx, 640, 360, -1, -1);
 	// Create image
 	data->image = mlx_new_image(data->mlx, data->mlx->width, data->mlx->height);
 	if (data->image == NULL)
@@ -69,11 +64,13 @@ static void	data_init(t_fractol *data)
 		ft_error();
 }
 
-static	int	usage_prompt(void)
+int	usage_prompt(void)
 {
+	ft_putstr_fd("Invalid Arguments\n", STDOUT_FILENO);
 	ft_putstr_fd("\nUsage: ./fractol [option]\n\n", STDOUT_FILENO);
 	ft_putstr_fd("Option:\n", STDOUT_FILENO);
 	ft_putstr_fd("  Mandelbrot/mandelbrot: Mandelbrot set\n", STDOUT_FILENO);
-	ft_putstr_fd("  Julia/julia: Julia set\n\n", STDOUT_FILENO);
+	ft_putstr_fd("  Julia/julia: Julia set\n", STDOUT_FILENO);
+	ft_putstr_fd("  Burning ship/Burning ship: Burning ship\n\n", STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }
