@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:44:00 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/06 00:59:34 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:00:33 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ uint32_t    draw_mandelbrot(t_fractol *data)
 		y_squared = y * y;
 		iteration++; 
 	}
-	return (get_color(data, iteration, sqrt(x_squared + y_squared)));
+	return (get_color(data, iteration));
 }

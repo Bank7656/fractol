@@ -31,7 +31,10 @@
 #define BURNING_SHIP 2
 
 #define WIDTH 1024
-#define HEIGHT 576
+#define HEIGHT 768
+
+#define ZOOM_MIN_RANGE 1.0E-10L
+#define ZOOM_MAX_RANGE 5.0L
 
 typedef struct s_range
 {
@@ -48,7 +51,7 @@ typedef struct s_fractol
 	mlx_image_t *image;
 	int32_t     color_style;
 	float		max_iteration;
-    float       zoom;
+    long double       zoom;
 	int32_t		is_new_iteration;
 	int32_t		is_zoom;
 	int32_t		is_toggle;
@@ -89,7 +92,7 @@ uint32_t    draw_burning_ship(t_fractol *data);
 void    toggle_mode(t_fractol *data);
 
 /* color.c */
-uint32_t    get_color(t_fractol *data, int32_t iteration, double zn);
+uint32_t    get_color(t_fractol *data, int32_t iteration);
 
 /* resize_hook.c */
 void		my_resizefunc(int32_t width, int32_t height, void *param);
@@ -101,6 +104,9 @@ void		my_keyhook(mlx_key_data_t keydata, void *param);
 void		my_scrollhook(double xdelta, double ydelta, void *param);
 void		zoom_in(t_fractol *data, float scaled_x, float scaled_y);
 void		zoom_out(t_fractol *data, float scaled_x, float scaled_y);
+
+/* close_hook.c */
+void    my_closehook(void *param);
 
 /* loop_hook.c*/
 void		my_loophook(void *param);

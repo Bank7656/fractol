@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 01:02:58 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/06 01:04:02 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/07 22:50:48 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void    plot(t_fractol *data, int32_t is_full_pixel)
 	if (is_full_pixel == 1)
 		step = 1;
 	pixel_y = 0;
-	while (pixel_y < data->mlx->height)
+	while (pixel_y < (uint32_t)(data->mlx->height))
 	{
 		pixel_x = 0;
-		while (pixel_x < data->mlx->width)
+		while (pixel_x < (uint32_t)(data->mlx->width))
 		{
 			data->scale_x = pixel_to_complex_x(data, pixel_x);
 			data->scale_y = pixel_to_complex_y(data, pixel_y);
@@ -67,7 +67,8 @@ static void fill_image(t_fractol *data, uint32_t x, uint32_t y, uint32_t color)
 		dx = 0;
 		while (dx < step)
 		{
-			if (x + dx < data->mlx->width && y + dy < data->mlx->height)
+			if (x + dx < (uint32_t)(data->mlx->width)
+				&& y + dy < (uint32_t)(data->mlx->height))
 				mlx_put_pixel(data->image, x + dx, y + dy, color); 
 			dx++;
 		}

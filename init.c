@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:17:03 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/07 03:06:18 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:42:29 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void    plot_init(t_fractol *data)
 static void    mandelbrot_init(t_fractol *data)
 {
 	data->range.x_min = -2;
-	data->range.x_max = 0.5;
-	data->range.y_min = -1.12;
-	data->range.y_max = 1.12;
+	data->range.x_max = 1.0;
+	data->range.y_min = -1.5;
+	data->range.y_max = 1.5;
 	data->zoom = 1.0;
 	data->max_iteration = 100.0;
 	data->cx = 0;

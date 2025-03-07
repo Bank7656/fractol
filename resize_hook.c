@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:42:23 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/06 02:27:14 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:51:03 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	my_resizefunc(int32_t width, int32_t height, void* param)
 	data = (t_fractol *)param;
 	mlx_delete_image(data->mlx, data->image);
 	new_width = width;
-	new_height = width * 9 / 16;
+	// new_height = width * 10 / 16;
+	new_height = height;
+	printf("Normal size: %i, Cal size: %i\n", height, new_height);
 	mlx_set_window_size(data->mlx, new_width, new_height);
 	data->image = mlx_new_image(data->mlx, new_width, new_height);
 	if (data->image == NULL)

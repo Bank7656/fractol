@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 22:18:03 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/07 02:54:47 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:39:40 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ int main(int argc, char *argv[])
 {
 	t_fractol   data;
 
+	if (argc < 2)
+		exit(usage_prompt());
 	if (parser(&data, argc, argv) == 0)
 		exit(usage_prompt());
 	data_init(&data);
 	check_hook(&data);
 	mlx_loop(data.mlx);
+	mlx_delete_image(data.mlx, data.image);
 	mlx_terminate(data.mlx);
 	return (EXIT_SUCCESS);
 }
@@ -38,6 +41,7 @@ static void	check_hook(t_fractol *data)
 	mlx_key_hook(data->mlx, &my_keyhook, data);
 	mlx_resize_hook(data->mlx, &my_resizefunc, data);
 	mlx_scroll_hook(data->mlx, &my_scrollhook, data);
+	mlx_close_hook(data->mlx, &my_closehook, data);
 	mlx_loop_hook(data->mlx, &my_loophook, data);
 }
 
@@ -54,7 +58,7 @@ static void	data_init(t_fractol *data)
 	data->mlx = mlx_init(WIDTH, HEIGHT, "fractol", true);
 	if (data->mlx == NULL)
 		ft_error();
-	mlx_set_window_limit(data->mlx, 640, 360, -1, -1);
+	mlx_set_window_limit(data->mlx, 800, 600, -1, -1);
 	// Create image
 	data->image = mlx_new_image(data->mlx, data->mlx->width, data->mlx->height);
 	if (data->image == NULL)

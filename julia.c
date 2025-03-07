@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:43:25 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/06 00:59:43 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:00:55 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ uint32_t    draw_julia(t_fractol *data)
         y_squared = y * y;
 		iteration++; 
 	}
-	return (get_color(data, iteration, sqrt(x_squared + y_squared)));
+	return (get_color(data, iteration));
 }

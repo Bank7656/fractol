@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 22:45:06 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/06 00:59:57 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:01:06 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ uint32_t    draw_burning_ship(t_fractol *data)
 		y_squared = y * y;
 		iteration++; 
 	}
-	return (get_color(data, iteration, sqrt(x_squared + y_squared)));
+	return (get_color(data, iteration));
 }
