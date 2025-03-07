@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:41:20 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/07 02:56:24 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:17:13 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void    my_keyhook(mlx_key_data_t keydata, void *param)
         && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
     {
         data->max_iteration -= 10;
+        if (data->max_iteration < 0)
+            data->max_iteration = 0;    
         data->is_new_iteration = 1;
     }
     else if (keydata.key == MLX_KEY_W 

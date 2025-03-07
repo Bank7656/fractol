@@ -6,13 +6,13 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 01:02:58 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/07 22:50:48 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:53:28 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void		fill_image(t_fractol *data, uint32_t x, uint32_t y, uint32_t color);
+static void		fill(t_fractol *data, uint32_t x, uint32_t y, uint32_t color);
 static uint32_t	draw_fractal(t_fractol *data);
 
 void    plot(t_fractol *data, int32_t is_full_pixel)
@@ -36,14 +36,14 @@ void    plot(t_fractol *data, int32_t is_full_pixel)
 			color = draw_fractal(data);
 			mlx_put_pixel(data->image, pixel_x, pixel_y, color);
 			if (is_full_pixel == 0)
-				fill_image(data, pixel_x, pixel_y, color);
+				fill(data, pixel_x, pixel_y, color);
 			pixel_x += step;
 		}
 		pixel_y += step;
 	}
 }
 
-static uint32_t    draw_fractal(t_fractol *data)
+static uint32_t	draw_fractal(t_fractol *data)
 {
 	if (data->plot == MANDELBROT)
 	   return (draw_mandelbrot(data));
@@ -51,10 +51,12 @@ static uint32_t    draw_fractal(t_fractol *data)
 		return (draw_julia(data));
 	else if (data->plot == BURNING_SHIP)
 		return (draw_burning_ship(data));
+	else if (data->plot == TRICORN)
+		return (draw_tricorn(data));
 	return (0); 
 }
 
-static void fill_image(t_fractol *data, uint32_t x, uint32_t y, uint32_t color)
+static void	fill(t_fractol *data, uint32_t x, uint32_t y, uint32_t color)
 {
 	int dx;
 	int dy;

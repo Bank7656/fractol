@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 22:18:03 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/07 18:39:40 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:45:41 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
 	if (argc < 2)
 		exit(usage_prompt());
-	if (parser(&data, argc, argv) == 0)
+	if (parser(&data, argc, argv) == -1)
 		exit(usage_prompt());
 	data_init(&data);
 	check_hook(&data);

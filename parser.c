@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:50:52 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/07 16:57:31 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:46:24 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ int32_t	parser(t_fractol *data, int argc, char *argv[])
 	else if (ft_strncmp(argv[1], "Burning ship", -1) == 0
 		|| ft_strncmp(argv[1], "burning ship", -1) == 0)
 		data->plot = BURNING_SHIP;
+	else if (ft_strncmp(argv[1], "Tricorn", -1) == 0
+		|| ft_strncmp(argv[1], "tricorn", -1) == 0)
+		data->plot = TRICORN;	
 	else
-		return (0);
-	if (argc != 2 && (data->plot == MANDELBROT || data->plot == BURNING_SHIP))
+		return (-1);
+	if (argc != 2 && (data->plot == MANDELBROT || data->plot == BURNING_SHIP || data->plot == TRICORN))
 		exit(usage_prompt());
 	else if (argc != 4 && data->plot == JULIA)
 		exit(usage_prompt());

@@ -25,10 +25,10 @@
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
 
-#define NONE -1
 #define	MANDELBROT 0
 #define JULIA 1
 #define BURNING_SHIP 2
+#define TRICORN 3
 
 #define WIDTH 1024
 #define HEIGHT 768
@@ -87,6 +87,9 @@ uint32_t    draw_julia(t_fractol *data);
 
 /* burning_ship.c*/
 uint32_t    draw_burning_ship(t_fractol *data);
+
+/* tricorn.c*/
+uint32_t    draw_tricorn(t_fractol *data);
 
 /* toggle.c */
 void    toggle_mode(t_fractol *data);

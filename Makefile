@@ -7,7 +7,8 @@ HEADERS := -I ./ -I $(LIBMLX)/include/MLX42
 LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm 
 # -framework Cocoa -framework OpenGL -framework IOKit # For macos
 # LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm # For linux
-MANDATORY_SRCS     := main.c my_atof.c parser.c init.c convert.c plot.c mandelbrot.c julia.c burning_ship.c color.c \
+MANDATORY_SRCS     := main.c my_atof.c parser.c init.c convert.c plot.c \
+					mandelbrot.c julia.c burning_ship.c tricorn.c color.c \
 					toggle.c resize_hook.c key_hook.c scroll_hook.c close_hook.c loop_hook.c
 MANDATORY_OBJS_DIR := ./objects/
 MANDATORY_SRCS_OBJS:= ${MANDATORY_SRCS:.c=.o}
