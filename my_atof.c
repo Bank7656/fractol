@@ -1,101 +1,101 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atof.c                                          :+:      :+:    :+:   */
+/*   my_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 01:12:18 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/07 02:37:09 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/09 04:45:32 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static double get_integer(const char **str);
-static double get_fraction(const char **str);
-static int  get_exponent(const char **str);
+static double	get_integer(const char **str);
+static double	get_fraction(const char **str);
+static int		get_exponent(const char **str);
 
-double my_atof(const char *str)
+double	my_atof(const char *str)
 {
-    int     sign;
-    int     exponent;
-    double  integer;
-    double  fraction;
-    double  result;
+	int		sign;
+	int		exponent;
+	double	integer;
+	double	fraction;
+	double	result;
 
-    sign = 1;
-    while (*str == ' ' || *str == '\t')
-        str++;
-    if (*str == '-')
-    {
-        sign = -1;
-        str++;
-    }
-    else if (*str == '+')
-        str++;
-    integer = get_integer(&str);
-    fraction = get_fraction(&str);
-    exponent = get_exponent(&str);
-    result = (integer + fraction) * pow(10, exponent);
-    return (sign * result);
+	sign = 1;
+	while (*str == ' ' || *str == '\t')
+		str++;
+	if (*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+	else if (*str == '+')
+		str++;
+	integer = get_integer(&str);
+	fraction = get_fraction(&str);
+	exponent = get_exponent(&str);
+	result = (integer + fraction) * pow(10, exponent);
+	return (sign * result);
 }
 
-static double get_integer(const char **str)
+static double	get_integer(const char **str)
 {
-    double value;
+	double	value;
 
-    value = 0.0;
-    while (ft_isdigit(**str))
-    {
-        value = value * 10.0 + (**str - '0');   
-        (*str)++;
-    }
-    return (value);
+	value = 0.0;
+	while (ft_isdigit(**str))
+	{
+		value = value * 10.0 + (**str - '0');
+		(*str)++;
+	}
+	return (value);
 }
 
-static double get_fraction(const char **str)
+static double	get_fraction(const char **str)
 {
-    double  value;
-    double  divisor;
-    
-    if (**str != '.')
-        return (0.0);
-    (*str)++;
-    value = 0.0;
-    divisor = 10.0;
-    while (ft_isdigit(**str))
-    {
-        value = value + (**str - '0') / divisor;
-        divisor *= 10;
-        (*str)++;
-    }
-    return (value);
+	double	value;
+	double	divisor;
+
+	if (**str != '.')
+		return (0.0);
+	(*str)++;
+	value = 0.0;
+	divisor = 10.0;
+	while (ft_isdigit(**str))
+	{
+		value = value + (**str - '0') / divisor;
+		divisor *= 10;
+		(*str)++;
+	}
+	return (value);
 }
 
-static int  get_exponent(const char **str)
+static int	get_exponent(const char **str)
 {
-    int sign;
-    int exponent;
+	int	sign;
+	int	exponent;
 
-    sign = 1;
-    exponent = 0;
-    if (**str != 'e' && **str != 'E')
-        return (0);
-    (*str)++;
-    if (**str == '-')
-    {
-        sign = -1;
-        (*str)++;
-    }
-    else if (**str == '+')
-        (*str)++;
-    while (ft_isdigit(**str))
-    {
-        exponent = exponent * 10 + (**str - '0');
-        (*str)++;
-    }
-    return (sign * exponent);
+	sign = 1;
+	exponent = 0;
+	if (**str != 'e' && **str != 'E')
+		return (0);
+	(*str)++;
+	if (**str == '-')
+	{
+		sign = -1;
+		(*str)++;
+	}
+	else if (**str == '+')
+		(*str)++;
+	while (ft_isdigit(**str))
+	{
+		exponent = exponent * 10 + (**str - '0');
+		(*str)++;
+	}
+	return (sign * exponent);
 }
 
 // // Test cases

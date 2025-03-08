@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 01:02:58 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/09 00:57:46 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/09 04:49:55 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void		fill(t_fractol *data, uint32_t x, uint32_t y, uint32_t color);
 static uint32_t	draw_fractal(t_fractol *data);
 
-void    plot(t_fractol *data, int32_t is_full_pixel)
+void	plot(t_fractol *data, int32_t is_full_pixel)
 {
-	int32_t     step;
+	int32_t		step;
 	uint32_t	pixel_x;
 	uint32_t	pixel_y;
 	uint32_t	color;
@@ -46,21 +46,21 @@ void    plot(t_fractol *data, int32_t is_full_pixel)
 static uint32_t	draw_fractal(t_fractol *data)
 {
 	if (data->plot == MANDELBROT)
-	   return (draw_mandelbrot(data));
+		return (draw_mandelbrot(data));
 	else if (data->plot == JULIA)
 		return (draw_julia(data));
 	else if (data->plot == BURNING_SHIP)
 		return (draw_burning_ship(data));
 	else if (data->plot == TRICORN)
 		return (draw_tricorn(data));
-	return (0); 
+	return (0);
 }
 
 static void	fill(t_fractol *data, uint32_t x, uint32_t y, uint32_t color)
 {
-	int dx;
-	int dy;
-	int step;
+	int	dx;
+	int	dy;
+	int	step;
 
 	step = 2;
 	dy = 0;
@@ -71,7 +71,7 @@ static void	fill(t_fractol *data, uint32_t x, uint32_t y, uint32_t color)
 		{
 			if (x + dx < (uint32_t)(data->mlx->width)
 				&& y + dy < (uint32_t)(data->mlx->height))
-				mlx_put_pixel(data->image, x + dx, y + dy, color); 
+				mlx_put_pixel(data->image, x + dx, y + dy, color);
 			dx++;
 		}
 		dy++;

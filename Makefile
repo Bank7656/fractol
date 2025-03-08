@@ -1,13 +1,10 @@
 NAME := fractol
-CFLAGS := -Ofast -O3
-CFLAGS := -Wall -Wextra -Werror -Wunreachable-code -Ofast
+CFLAGS := -Wall -Wextra -Werror -Wunreachable-code -Ofast -O3
 LIBMLX := ./MLX42/
 
 HEADERS := -I ./ -I $(LIBMLX)/include/MLX42
 LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm 
-# -framework Cocoa -framework OpenGL -framework IOKit # For macos
-# LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm # For linux
-MANDATORY_SRCS     := main.c my_atof.c parser.c init.c convert.c plot.c \
+MANDATORY_SRCS     := main.c my_atof.c prompt.c parser.c init.c convert.c plot.c \
 					mandelbrot.c julia.c burning_ship.c tricorn.c color.c \
 					toggle.c key_hook.c scroll_hook.c close_hook.c loop_hook.c
 MANDATORY_OBJS_DIR := ./objects/
@@ -19,12 +16,14 @@ LIBFT_NAME = libft.a
 LIBFT_DIR := ./libft/
 LIBFT = $(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
 
+all: $(NAME)
+
 bonus: all
 
-all: libmlx $(NAME)
-
-libmlx:
+$(NAME): $(MANDATORY_OBJS_DIR) $(MANDATORY_OBJS)
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+	@$(MAKE) -C $(LIBFT_DIR)
+	@$(CC) $(CFLAGS) $(MANDATORY_OBJS) $(LIBS) $(LIBFT) $(HEADERS) -o $(NAME)
 
 $(MANDATORY_OBJS_DIR)%.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
@@ -32,24 +31,17 @@ $(MANDATORY_OBJS_DIR)%.o: %.c
 $(MANDATORY_OBJS_DIR):
 	@mkdir -p $(MANDATORY_OBJS_DIR)
 
-$(NAME): $(LIBFT) $(MANDATORY_OBJS_DIR) $(MANDATORY_OBJS)
-	@$(CC) $(CFLAGS) $(MANDATORY_OBJS) $(LIBS) $(LIBFT) $(HEADERS) -o $(NAME)
-
-$(LIBFT) : 
-	@$(MAKE) -C $(LIBFT_DIR)
-	@echo "Created Libft"
-
 clean:
 	@rm -rf $(MANDATORY_OBJS_DIR)
 	@$(MAKE) clean -C $(LIBFT_DIR)
-	@rm -rf $(LIBMLX)/build
 
-fclean: fclean
+fclean:
 	@rm -rf $(MANDATORY_OBJS_DIR)
 	@$(MAKE) fclean -C $(LIBFT_DIR)
+	@rm -rf $(LIBMLX)/build
 	@rm -rf $(NAME)
 
 re: clean all
 
-.PHONY: all, clean, fclean, re, libmlx, libft
+.PHONY: all, clean, fclean, re
 

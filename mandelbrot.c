@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:44:00 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/08 12:22:36 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/09 04:43:49 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 /*
 	Using escape time algorithm to calculate mandelbrot set
 */
-uint32_t    draw_mandelbrot(t_fractol *data)
+uint32_t	draw_mandelbrot(t_fractol *data)
 {
-	int32_t			iteration;
-	long double 	x;
-	long double 	y;
-	long double 	x_squared;
-	long double 	y_squared;
+	int32_t		iteration;
+	long double	x;
+	long double	y;
+	long double	x_squared;
+	long double	y_squared;
 
 	x = 0;
 	y = 0;
@@ -34,7 +34,7 @@ uint32_t    draw_mandelbrot(t_fractol *data)
 		x = x_squared - y_squared + data->scale_x;
 		x_squared = x * x;
 		y_squared = y * y;
-		iteration++; 
+		iteration++;
 	}
 	return (get_color(data, iteration));
 }

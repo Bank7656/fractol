@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:48:59 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/09 03:16:48 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/09 05:17:23 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static uint32_t	black_red_gradient(t_fractol *data, int32_t iteration);
 static uint32_t	smooth_color(t_fractol *data, int32_t iteration);
-static uint32_t black_white(t_fractol *data, int32_t iteration);
-static uint32_t rainbow(t_fractol *data, int32_t iteration);
+static uint32_t	black_white(t_fractol *data, int32_t iteration);
+static uint32_t	rainbow(t_fractol *data, int32_t iteration);
 
 /*
 	Parsing to each color style
 */
-uint32_t    get_color(t_fractol *data, int32_t iteration)
+uint32_t	get_color(t_fractol *data, int32_t iteration)
 {
 	if (data->color_style == 0)
 		return (smooth_color(data, iteration));
@@ -31,15 +31,14 @@ uint32_t    get_color(t_fractol *data, int32_t iteration)
 	else if (data->color_style == 3)
 		return (rainbow(data, iteration));
 	return (0xFF0000FF);
-		
 }
 
-static uint32_t    black_red_gradient(t_fractol *data, int32_t iteration)
+static uint32_t	black_red_gradient(t_fractol *data, int32_t iteration)
 {
-	uint8_t r;
-	uint8_t g;
-	uint8_t b;
-	int32_t max_iterate;
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
+	int32_t	max_iterate;
 
 	max_iterate = data->max_iteration;
 	if (iteration == max_iterate)
@@ -47,14 +46,13 @@ static uint32_t    black_red_gradient(t_fractol *data, int32_t iteration)
 	r = ((iteration * 255) / max_iterate);
 	g = ((iteration * 128) / max_iterate);
 	b = ((iteration * 64) / max_iterate);
-
 	return ((r << 24) | (g << 16) | (b << 8) | 255);
 }
 
 static uint32_t	smooth_color(t_fractol *data, int32_t iteration)
 {
-	uint32_t colors[16];
-	
+	uint32_t	colors[16];
+
 	colors[0] = 0x421E0FFF;
 	colors[1] = 0x19071AFF;
 	colors[2] = 0x09012FFF;
@@ -76,14 +74,13 @@ static uint32_t	smooth_color(t_fractol *data, int32_t iteration)
 	return (colors[iteration % 16]);
 }
 
-static uint32_t black_white(t_fractol *data, int32_t iteration)
+static uint32_t	black_white(t_fractol *data, int32_t iteration)
 {
-	uint32_t black;
-	uint32_t white;
+	uint32_t	black;
+	uint32_t	white;
 
 	black = 0x000000FF;
 	white = 0xFFFFFFFF;
-
 	if (iteration == (int32_t)(data->max_iteration))
 		return (black);
 	if (iteration % 2 == 0)
@@ -91,10 +88,10 @@ static uint32_t black_white(t_fractol *data, int32_t iteration)
 	return (white);
 }
 
-static uint32_t rainbow(t_fractol *data, int32_t iteration)
+static uint32_t	rainbow(t_fractol *data, int32_t iteration)
 {
-	uint32_t colors[7];
-	
+	uint32_t	colors[7];
+
 	colors[0] = 0xFF0000FF;
 	colors[1] = 0xFF7F00FF;
 	colors[2] = 0xFFFF00FF;
@@ -102,7 +99,6 @@ static uint32_t rainbow(t_fractol *data, int32_t iteration)
 	colors[4] = 0x00FFFFFF;
 	colors[5] = 0x0000FFFF;
 	colors[6] = 0x8B0000FF;
-
 	if (iteration == data->max_iteration)
 		return (0x000000FF);
 	return (colors[iteration % 7]);
