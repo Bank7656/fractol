@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:48:59 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/07 22:53:18 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:16:48 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static uint32_t rainbow(t_fractol *data, int32_t iteration);
 uint32_t    get_color(t_fractol *data, int32_t iteration)
 {
 	if (data->color_style == 0)
-		return (black_red_gradient(data, iteration));
-	else if (data->color_style == 1)
 		return (smooth_color(data, iteration));
+	else if (data->color_style == 1)
+		return (black_red_gradient(data, iteration));
 	else if (data->color_style == 2)
 		return (black_white(data, iteration));
 	else if (data->color_style == 3)
@@ -39,15 +39,14 @@ static uint32_t    black_red_gradient(t_fractol *data, int32_t iteration)
 	uint8_t r;
 	uint8_t g;
 	uint8_t b;
-	uint8_t max_iterate;
-
+	int32_t max_iterate;
 
 	max_iterate = data->max_iteration;
 	if (iteration == max_iterate)
 		return (0x000000FF);
-	r = (iteration * 255) / max_iterate;
-	g = (iteration * 128) / max_iterate;
-	b = (iteration * 64) / max_iterate;
+	r = ((iteration * 255) / max_iterate);
+	g = ((iteration * 128) / max_iterate);
+	b = ((iteration * 64) / max_iterate);
 
 	return ((r << 24) | (g << 16) | (b << 8) | 255);
 }
@@ -72,7 +71,7 @@ static uint32_t	smooth_color(t_fractol *data, int32_t iteration)
 	colors[13] = 0xCC8000FF;
 	colors[14] = 0x995700FF;
 	colors[15] = 0x6A3403FF;
-	if (iteration == data->max_iteration)
+	if (iteration == (int32_t)(data->max_iteration))
 		return (0x000000FF);
 	return (colors[iteration % 16]);
 }
@@ -85,9 +84,9 @@ static uint32_t black_white(t_fractol *data, int32_t iteration)
 	black = 0x000000FF;
 	white = 0xFFFFFFFF;
 
-	if (iteration == data->max_iteration)
+	if (iteration == (int32_t)(data->max_iteration))
 		return (black);
-	else if (iteration % 2 == 0)
+	if (iteration % 2 == 0)
 		return (black);
 	return (white);
 }

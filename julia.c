@@ -6,31 +6,29 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:43:25 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/08 00:40:29 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/09 01:46:05 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
 /*
-	Using escape time algorithm to calculate burning ship set
+	Using escape time algorithm to calculate julia set
 */
 uint32_t    draw_julia(t_fractol *data)
 {
+	int32_t			iteration;
 	long double 	x;
 	long double 	y;
 	long double 	x_squared;
 	long double 	y_squared;
-	int32_t iteration;
-	int32_t	loop;
 
 	x = data -> scale_x;
-	y = data -> scale_y;
+	y = (-1) * (data -> scale_y);
 	x_squared = x * x;
 	y_squared = y * y;
 	iteration = 0;
-	loop = (data->max_iteration);
-	while ((x_squared + y_squared <= 4) && (iteration < loop))
+	while ((x_squared + y_squared <= 4) && (iteration < data->max_iteration))
 	{
         
         y = (x + x) * y + data->cy;

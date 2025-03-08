@@ -9,7 +9,7 @@ LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 # LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm # For linux
 MANDATORY_SRCS     := main.c my_atof.c parser.c init.c convert.c plot.c \
 					mandelbrot.c julia.c burning_ship.c tricorn.c color.c \
-					toggle.c resize_hook.c key_hook.c scroll_hook.c close_hook.c loop_hook.c
+					toggle.c key_hook.c scroll_hook.c close_hook.c loop_hook.c
 MANDATORY_OBJS_DIR := ./objects/
 MANDATORY_SRCS_OBJS:= ${MANDATORY_SRCS:.c=.o}
 MANDATORY_OBJS     := $(addprefix $(MANDATORY_OBJS_DIR), $(MANDATORY_SRCS_OBJS))
@@ -33,7 +33,7 @@ $(MANDATORY_OBJS_DIR):
 	@mkdir -p $(MANDATORY_OBJS_DIR)
 
 $(NAME): $(LIBFT) $(MANDATORY_OBJS_DIR) $(MANDATORY_OBJS)
-	@$(CC) $(MANDATORY_OBJS) $(LIBS) $(LIBFT) $(HEADERS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(MANDATORY_OBJS) $(LIBS) $(LIBFT) $(HEADERS) -o $(NAME)
 
 $(LIBFT) : 
 	@$(MAKE) -C $(LIBFT_DIR)

@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:41:20 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/08 00:17:13 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/09 00:24:34 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,4 @@ void    my_keyhook(mlx_key_data_t keydata, void *param)
         data->color_style = 2;
     else if (keydata.key == MLX_KEY_4 && keydata.action == MLX_PRESS)
         data->color_style = 3;
-    
 }

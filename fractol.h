@@ -97,9 +97,6 @@ void    toggle_mode(t_fractol *data);
 /* color.c */
 uint32_t    get_color(t_fractol *data, int32_t iteration);
 
-/* resize_hook.c */
-void		my_resizefunc(int32_t width, int32_t height, void *param);
-
 /* key_hook.c */
 void		my_keyhook(mlx_key_data_t keydata, void *param);
 

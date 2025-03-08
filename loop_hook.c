@@ -6,7 +6,7 @@
 /*   By: thacharo <thacharo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:53:07 by thacharo          #+#    #+#             */
-/*   Updated: 2025/03/07 23:30:46 by thacharo         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:18:36 by thacharo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,5 @@ void    my_loophook(void *param)
         toggle_mode(data);
     else
         plot(data, 1);
-    // printf("Iteration: %.2f\n", data->max_iteration);
-    // printf("Zoom factor: %.20Lf\n", data->zoom);
-    // printf("[x_min: %Lf] [x_max: %Lf] [y_min: %Lf] [y_max: %Lf]\n", data->range.x_min, data->range.x_max, data->range.y_min, data->range.y_max);
-    // printf("Slope: %Lf\n", (data->range.y_max - data->range.y_min)/(data->range.x_max - data->range.x_min));
     return ;
 }
